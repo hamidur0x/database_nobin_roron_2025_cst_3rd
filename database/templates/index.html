@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student DB</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+</head>
+<body>
+    <h1>CST 3rd Finance Database</h1>
+    
+    {% if is_admin %}
+    <div class="admin-banner">🔒 ADMIN MODE</div>
+    <form method="post" action="/add">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="text" name="roll" placeholder="Roll Number" required>
+        <input type="number" name="amount" placeholder="Amount">
+        <button type="submit">Add Student</button>
+    </form>
+    {% else %}
+    <a href="/login" class="button">Admin Login</a>
+    {% endif %}
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Roll</th>
+                <th>Amount</th>
+                {% if is_admin %}<th>Actions</th>{% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.Serial }}</td>
+                <td>{{ student.Name }}</td>
+                <td>{{ student.Roll }}</td>
+                <td>₹{{ student.Amount }}</td>
+                {% if is_admin %}
+                <td>
+                    <a href="/delete/{{ student.Roll }}" onclick="return confirm('Delete this student?')">Delete</a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    {% if is_admin %}<a href="/logout">Logout</a>{% endif %}
+    <a href="/pdf">Download PDF</a>
+</body>
+</html>
