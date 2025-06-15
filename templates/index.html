@@ -1,8 +1,82 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student DB</title>
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <style>
+        /* Custom styles for mobile responsiveness */
+        body {
+            padding: 1rem;
+        }
+
+        table {
+            width: 100%;
+            overflow-x: auto;
+            display: block;
+        }
+
+        table thead {
+            display: none;
+        }
+
+        table tr {
+            display: block;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+
+        table td {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.3rem 0;
+        }
+
+        table td::before {
+            content: attr(data-label);
+            font-weight: bold;
+        }
+
+        /* Re-display table headers for larger screens */
+        @media (min-width: 768px) {
+            table {
+                display: table;
+            }
+
+            table thead {
+                display: table-header-group;
+            }
+
+            table tr {
+                display: table-row;
+                border: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            table td {
+                display: table-cell;
+                padding: 0.5rem;
+            }
+
+            table td::before {
+                content: none;
+            }
+        }
+
+        .admin-banner {
+            font-weight: bold;
+            color: red;
+        }
+
+        form input, form button {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+    </style>
 </head>
 <body>
     <h1>CST 3rd Finance Database</h1>
@@ -32,12 +106,12 @@
         <tbody>
             {% for student in students %}
             <tr>
-                <td>{{ student.Serial }}</td>
-                <td>{{ student.Name }}</td>
-                <td>{{ student.Roll }}</td>
-                <td>₹{{ student.Amount }}</td>
+                <td data-label="ID">{{ student.Serial }}</td>
+                <td data-label="Name">{{ student.Name }}</td>
+                <td data-label="Roll">{{ student.Roll }}</td>
+                <td data-label="Amount">₹{{ student.Amount }}</td>
                 {% if is_admin %}
-                <td>
+                <td data-label="Actions">
                     <a href="/delete/{{ student.Roll }}" onclick="return confirm('Delete this student?')">Delete</a>
                 </td>
                 {% endif %}
